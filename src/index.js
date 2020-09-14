@@ -125,7 +125,20 @@ export class MarkdownNavbar extends Component {
             /^(.+\.)(\d+)$/g,
             (w, $1, $2) => `${$1}${parseInt($2, 10) + 1}`
           );
-        } else {
+        } else if (navData[i - 1] && t.level === navData[i - 1].level - 1) {
+          let upLevelIndex = i - 1
+          for (; ;) {
+            if (t.level === navData[upLevelIndex].level) {
+              break
+            }
+            upLevelIndex -= 1
+          }
+          let listNo = navData[upLevelIndex].listNo
+          t.listNo = listNo.replace(
+            /^(.+\.)(\d+)$/g,
+            (w, $1, $2) => `${$1}${parseInt($2, 10) + 1}`
+          )
+        }else {
           t.listNo = '';
         }
       }
